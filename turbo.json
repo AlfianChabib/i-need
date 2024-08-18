@@ -1,0 +1,33 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "public/dist/**"],
+      "dependsOn": ["^build"],
+      "env": ["NEXT_PUBLIC_API_HOST"]
+    },
+    "start": {
+      "dependsOn": ["^build", "^dev"],
+      "cache": false
+    },
+    "db:migrate:deploy": {},
+    "db:migrate:dev": {},
+    "db:push": {},
+    "db:seed": {},
+    "studio": {},
+    "lint": {
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "generate": {
+      "dependsOn": ["^generate"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CANDIDATE
+  COMPANY
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERN
+}
+
+enum InterviewType {
+  REMOTE
+  ONSITE
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum InterviewStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model User {
+  id          String        @id @default(cuid())
+  username    String
+  email       String        @unique
+  role        Role          @default(CANDIDATE)
+  profile     Profile?
+  auth        Auth?
+  authToken   AuthToken[]
+  verifyToken VerifyToken[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id          String  @id @default(cuid())
+  userId      String  @unique
+  firstName   String
+  lastName    String
+  phoneNumber String?
+  location    String?
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Auth {
+  id       String @id @default(cuid())
+  userId   String @unique
+  email    String @unique
+  password String
+  salt     String
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuthToken {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  refreshToken String
+  isUsed       Boolean  @default(false)
+  expiresAt    DateTime
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerifyToken {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  token     String
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

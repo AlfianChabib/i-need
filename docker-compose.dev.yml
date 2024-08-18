@@ -1,0 +1,72 @@
+services:
+  mysql:
+    platform: linux/amd64
+    image: mysql:8.0.32
+    container_name: ineed_mysql
+    restart: always
+    env_file: ./.env
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: ineed
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - ineed_network
+
+  api:
+    container_name: api
+    env_file: ./apps/api/.env
+    build:
+      context: ./
+      dockerfile: ./apps/api/Dockerfile
+    restart: always
+    environment:
+      - DATABASE_URL=mysql://root:root@mysql:3306/ineed
+      - FRONTEND_URL=http://web:3000
+    depends_on:
+      - mysql
+    ports:
+      - 3001:3001
+    networks:
+      - ineed_network
+
+  web:
+    container_name: web
+    build:
+      context: ./
+      dockerfile: ./apps/web/Dockerfile
+    restart: always
+    env_file: ./apps/web/.env
+    environment:
+      - NEXT_PUBLIC_API_HOST=http://api:3001
+    depends_on:
+      - api
+    ports:
+      - 3000:3000
+    networks:
+      - ineed_network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - mysql
+      - api
+      - web
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_PORT=80
+
+volumes:
+  mysql:
+    driver: local
+
+networks:
+  ineed_network:
+    name: ineed_network
+    external: true
