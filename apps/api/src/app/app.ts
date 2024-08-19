@@ -5,6 +5,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { corsOptions } from "../utils/cors-option";
 import { ApiV1Router } from "../routers/api-v1.router";
+import path from "path";
+import errorMiddleware from "../middleware/error.middleware";
 
 export default class App {
   private app: Express;
@@ -23,10 +25,12 @@ export default class App {
     this.app.use(json());
     this.app.use(cookieParser());
     this.app.use(urlencoded({ extended: true }));
+    this.app.use(express.static(path.join(__dirname, "../../public")));
   }
 
   private handleError(): void {
     // not found
+    this.app.use(errorMiddleware);
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       if (req.path.includes("/api/")) {
         res.status(404).send("Not found !");
@@ -56,12 +60,9 @@ export default class App {
     this.app.use("/api/v1", apiV1Router.getRouter());
   }
 
-  public start(): void {
-    const PORT = process.env.PORT;
-    const NODE_ENV = process.env.NODE_ENV;
-
-    this.app.listen(PORT, () => {
-      console.log(`  ➜  [API] ${NODE_ENV}:   http://localhost:${PORT}/`);
+  public start(port: number): void {
+    this.app.listen(port, () => {
+      console.log(`  ➜  [API] ${process.env.NODE_ENV}:   http://localhost:${port}/`);
     });
   }
 }

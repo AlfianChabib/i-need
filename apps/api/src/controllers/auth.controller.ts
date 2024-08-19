@@ -12,11 +12,12 @@ export class AuthController {
 
       await AuthService.registerCandidate(data.username, data.email, data.password);
 
-      return res.status(200).json(data);
+      return res.status(200).json({ success: true, message: "Check your email to verify your account" });
     } catch (error) {
       next(error);
     }
   }
+
   async register2() {
     tryCatchFn(async (req: Request, res: Response, next: NextFunction) => {
       const data = req.body;

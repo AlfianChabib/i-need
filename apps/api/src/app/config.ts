@@ -12,14 +12,22 @@ export const envSchema = z.object({
   PORT: z.coerce.number().min(1000),
   NODE_ENV: z.union([z.literal("development"), z.literal("testing"), z.literal("production")]).default("development"),
   DATABASE_URL: z.string().url(),
+  BACKEND_URL: z.string().url(),
   FRONTEND_URL: z.string().url(),
   RESEND_API_KEY: z.string(),
+  SECRET_VERIFICATION_TOKEN: z.string(),
+  LIFETIME_VERIFICATION_TOKEN: z.string(),
+  SECRET_REFRESH_TOKEN: z.string(),
+  LIFETIME_REFRESH_TOKEN: z.string(),
+  SECRET_ACCESS_TOKEN: z.string(),
+  LIFETIME_ACCESS_TOKEN: z.string(),
 });
 
 export const env = envSchema.parse(process.env);
-export type Environment = {
-  Bindings: z.infer<typeof envSchema>;
-};
+
+// export type Environment = {
+//   Bindings: z.infer<typeof envSchema>;
+// };
 
 declare global {
   namespace NodeJS {
