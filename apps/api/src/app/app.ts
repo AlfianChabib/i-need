@@ -7,6 +7,7 @@ import { corsOptions } from "../utils/cors-option";
 import { ApiV1Router } from "../routers/api-v1.router";
 import path from "path";
 import errorMiddleware from "../middleware/error.middleware";
+import { env } from "./config";
 
 export default class App {
   private app: Express;
@@ -62,7 +63,7 @@ export default class App {
 
   public start(port: number): void {
     this.app.listen(port, () => {
-      console.log(`  ➜  [API] ${process.env.NODE_ENV}:   http://localhost:${port}/`);
+      console.log(`  ➜  [API] ${env.NODE_ENV}:   http://localhost:${port}/`);
     });
   }
 }

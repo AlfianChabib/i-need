@@ -15,7 +15,6 @@ export default function errorMiddleware(err: Error, req: Request, res: Response,
       message: err.message,
     });
   } else {
-    console.log(err);
     return res.status(500).json({ status: "error", error: "Internal server error" });
   }
 }

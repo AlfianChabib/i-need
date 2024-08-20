@@ -33,6 +33,10 @@ export class AuthValidator {
       }
     });
 
+  static readonly verifySchema = z.object({
+    token: z.string({ message: "Invalid token" }),
+  });
+
   static readonly loginSchema = z.object({
     email: z.string().email({ message: "Invalid email" }),
     password: z.string().min(8, { message: "Password must be at least 8 characters" }),

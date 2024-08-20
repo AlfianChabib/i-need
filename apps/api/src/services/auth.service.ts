@@ -2,8 +2,9 @@ import prisma from "../app/prisma";
 import { SendEmail } from "../common/email/send-email";
 import { checkExistAccount } from "../common/helpers/check-exist-user";
 import { ResponseError } from "../common/response-error";
-import { hashPassword } from "../lib/bcrypt/password";
-import { genVerifyToken } from "../lib/jwt/verification.jwt";
+import { comparePassword, hashPassword } from "../lib/bcrypt/password";
+import { genAuthToken } from "../lib/jwt/auth-token.jwt";
+import { genVerifyToken, verifyVerifyToken } from "../lib/jwt/verification.jwt";
 
 export class AuthService {
   static async registerCandidate(username: string, email: string, password: string) {
@@ -15,12 +16,37 @@ export class AuthService {
         data: { username, email, auth: { create: { password: hashedPassword, salt, email } } },
       });
 
-      const { token, verifyTokenUrl, expiresDate } = genVerifyToken(email);
+      const { hashedToken, verifyTokenUrl, expiresDate } = genVerifyToken({ email, userId: newUser.id });
       await tx.verifyToken.create({
-        data: { userId: newUser.id, token, expiresAt: expiresDate },
+        data: { userId: newUser.id, token: hashedToken, expiresAt: expiresDate },
       });
 
       await SendEmail.verifyEmail(email, verifyTokenUrl, expiresDate);
     });
+  }
+
+  static async verifyEmail(token: string) {
+    const data = verifyVerifyToken(token);
+    if (!data) throw new ResponseError(400, "Invalid token");
+
+    await prisma.user.update({ where: { id: data.userId }, data: { isVerified: true } });
+  }
+
+  static async login(email: string, password: string) {
+    const user = await prisma.user.findFirst({ where: { email }, include: { auth: true } });
+    if (!user || !user.auth) throw new ResponseError(400, "Your account is not registered");
+    if (!user.isVerified) throw new ResponseError(400, "Your account is not verified, please verify your email");
+
+    const isPasswordCorrect = comparePassword(password, user.auth.password, user.auth.salt);
+    if (!isPasswordCorrect) throw new ResponseError(400, "Invalid email or password");
+
+    const token = genAuthToken({ email: user.email, userId: user.id, role: user.role });
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { authToken: { create: { refreshToken: token.hashedToken, expiresAt: token.expiresDate } } },
+    });
+
+    return { accessToken: token.accessToken, refreshToken: token.refreshToken };
   }
 }

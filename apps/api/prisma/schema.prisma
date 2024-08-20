@@ -45,6 +45,7 @@ model User {
   auth        Auth?
   authToken   AuthToken[]
   verifyToken VerifyToken[]
+  isVerified  Boolean       @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

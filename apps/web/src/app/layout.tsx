@@ -2,11 +2,9 @@ import type { Metadata } from "next";
 import { Inter_Tight as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import TanstackProviders from "@/components/providers/tanstack-provider";
 
-const fontSans = FontSans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: "INeed",
@@ -20,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>{children}</body>
+      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+        <TanstackProviders>{children}</TanstackProviders>
+      </body>
     </html>
   );
 }
