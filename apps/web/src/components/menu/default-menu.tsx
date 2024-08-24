@@ -20,7 +20,8 @@ export default function DefaultMenu() {
         <MenuLink href="/sign-up/candidate" label="Start as a Candidate" />
         <MenuLink href="/sign-up/company" label="Start as a Company" />
         <DropdownMenuSeparator />
-        <MenuLink href="/sign-in" label="Sign In" />
+        <MenuLink href="/sign-in/candidate" label="Sign In as a Candidate" />
+        <MenuLink href="/sign-in/company" label="Sign In as a Company" />
       </DropdownMenuContent>
     </DropdownMenu>
   );

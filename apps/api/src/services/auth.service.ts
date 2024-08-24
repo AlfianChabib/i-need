@@ -3,7 +3,8 @@ import { SendEmail } from "../common/email/send-email";
 import { checkExistAccount } from "../common/helpers/check-exist-user";
 import { ResponseError } from "../common/response-error";
 import { comparePassword, hashPassword } from "../lib/bcrypt/password";
-import { genAuthToken } from "../lib/jwt/auth-token.jwt";
+import { hashToken } from "../lib/hash-token";
+import { genAuthToken, verifyRefreshToken } from "../lib/jwt/auth-token.jwt";
 import { genVerifyToken, verifyVerifyToken } from "../lib/jwt/verification.jwt";
 
 export class AuthService {
@@ -42,11 +43,39 @@ export class AuthService {
 
     const token = genAuthToken({ email: user.email, userId: user.id, role: user.role });
 
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { authToken: { create: { refreshToken: token.hashedToken, expiresAt: token.expiresDate } } },
+    await prisma.authToken.create({
+      data: { userId: user.id, refreshToken: token.hashedToken, expiresAt: token.expiresDate },
     });
 
-    return { accessToken: token.accessToken, refreshToken: token.refreshToken };
+    return {
+      accessToken: token.accessToken,
+      refreshToken: token.refreshToken,
+    };
+  }
+
+  static async getSession(userId: string) {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new ResponseError(400, "User not found");
+
+    return user;
+  }
+
+  static async refreshToken(refreshToken: string) {
+    const data = verifyRefreshToken(refreshToken);
+    if (!data) throw new ResponseError(400, "Invalid token");
+
+    const hashedToken = hashToken(refreshToken);
+
+    const user = await prisma.user.findUnique({ where: { id: data.userId } });
+    if (!user) throw new ResponseError(400, "User not found");
+
+    const existToken = await prisma.authToken.findFirst({ where: { userId: user.id, refreshToken: hashedToken } });
+
+    const token = genAuthToken({ email: user.email, userId: user.id, role: user.role });
+
+    return {
+      accessToken: token.accessToken,
+      refreshToken: token.refreshToken,
+    };
   }
 }

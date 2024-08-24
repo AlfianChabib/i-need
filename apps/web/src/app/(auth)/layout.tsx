@@ -1,3 +1,3 @@
 export default function AuthLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <div>{children}</div>;
+  return <section className="p-5 h-full bg-dashboardbg flex items-center justify-center">{children}</section>;
 }

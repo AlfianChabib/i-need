@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { AuthController } from "../controllers/auth.controller";
 import { validate } from "../middleware/validator.middleware";
-import { AuthValidator } from "../validators/auth.validator";
+import { AuthValidator } from "../validations/auth.validation";
 
 export class AuthRouter {
   private router: Router;
@@ -17,6 +17,8 @@ export class AuthRouter {
     this.router.post("/register", validate(AuthValidator.registerCandidate, "body"), this.authController.register);
     this.router.post("/verify", validate(AuthValidator.verifySchema, "body"), this.authController.verifyEmail);
     this.router.post("/login", validate(AuthValidator.loginSchema, "body"), this.authController.login);
+    this.router.get("/session", this.authController.getSession);
+    this.router.post("/refresh", this.authController.refreshToken);
   }
 
   getRouter(): Router {

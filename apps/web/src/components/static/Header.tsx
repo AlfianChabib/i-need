@@ -1,10 +1,17 @@
+"use client";
+
 import { Github, Star } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import DefaultMenu from "../menu/default-menu";
+import { useSession } from "../providers/session-provider";
 
 export default function Header() {
+  const session = useSession();
+
+  console.log(session);
+
   return (
     <nav className="fixed top-0 z-50 bg-white border-b border-zinc-300 w-full">
       <div className="flex items-center justify-between px-5 py-4 container">
@@ -31,7 +38,17 @@ export default function Header() {
             </Button>
           </Link>
         </div>
-        <DefaultMenu />
+        <div className="flex gap-4">
+          <Link href="/login" className={buttonVariants({ variant: "outline" })}>
+            Sign In
+          </Link>
+          <Link
+            href="/sign-up/candidate"
+            className={buttonVariants({ className: "bg-gradient-to-r from-red-600 to-yellow-600 font-normal" })}
+          >
+            Get Started
+          </Link>
+        </div>
       </div>
     </nav>
   );

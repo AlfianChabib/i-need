@@ -6,7 +6,7 @@ const main = () => {
   prisma.$connect();
 
   const app = new App();
-  app.start(env.PORT);
+  app.start();
 };
 
 main();

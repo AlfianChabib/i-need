@@ -4,7 +4,7 @@ import { ResponseError } from "../../common/response-error";
 import { hashToken } from "../hash-token";
 import { Role } from "@prisma/client";
 
-type TokenData = {
+export type TokenData = {
   email: string;
   userId: string;
   role: Role;

@@ -8,6 +8,8 @@ const envFile = NODE_ENV === "development" ? ".env.development" : ".env";
 config({ path: resolve(__dirname, `../../${envFile}`) });
 config({ path: resolve(__dirname, `../../${envFile}.local`), override: true });
 
+export const PORT = process.env.PORT;
+
 export const envSchema = z.object({
   PORT: z.coerce.number().min(1000),
   NODE_ENV: z.union([z.literal("development"), z.literal("testing"), z.literal("production")]).default("development"),
@@ -25,9 +27,9 @@ export const envSchema = z.object({
 
 export const env = envSchema.parse(process.env);
 
-// export type Environment = {
-//   Bindings: z.infer<typeof envSchema>;
-// };
+export type Environment = {
+  Bindings: z.infer<typeof envSchema>;
+};
 
 declare global {
   namespace NodeJS {
