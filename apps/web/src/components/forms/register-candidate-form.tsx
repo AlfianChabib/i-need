@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { AuthService } from "@/services/auth.service";
 
-export default function SignUpCandidateForm() {
+export default function SegisterCandidateForm() {
   const [message, setMessage] = useState<string>("");
 
   const { mutate } = useMutation({

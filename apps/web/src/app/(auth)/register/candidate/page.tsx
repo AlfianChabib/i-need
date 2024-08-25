@@ -1,4 +1,4 @@
-import SignUpCandidateForm from "@/components/forms/sign-up-candidate-form";
+import RegisterCandidateForm from "@/components/forms/register-candidate-form";
 import AuthTemplate from "@/components/templates/auth-template";
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
@@ -21,7 +21,7 @@ export default function SignUpCandidatePage() {
           <h2 className="text-2xl font-semibold text-foreground/85">Welcome to INeed</h2>
           <p className="text-sm text-foreground/60">Create your account</p>
         </div>
-        <SignUpCandidateForm />
+        <RegisterCandidateForm />
         <div className="flex items-center justify-center">
           <Link href="/login" className="text-sm text-foreground/60">
             Already have an account? Sign in

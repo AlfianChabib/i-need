@@ -43,7 +43,7 @@ export default function Header() {
             Sign In
           </Link>
           <Link
-            href="/sign-up/candidate"
+            href="/register/candidate"
             className={buttonVariants({ className: "bg-gradient-to-r from-red-600 to-yellow-600 font-normal" })}
           >
             Get Started

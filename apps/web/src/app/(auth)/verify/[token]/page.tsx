@@ -1,29 +1,16 @@
 import AuthTemplate from "@/components/templates/auth-template";
+import { buttonVariants } from "@/components/ui/button";
+import { MailCheck, MailWarning } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { verifyEmail } from "./action";
 
-async function verify(token: string) {
-  const API_URL = process.env.NEXT_PUBLIC_API_HOST;
-  const res = await fetch(`${API_URL}/auth/verify`, {
-    method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ token }),
-  });
-  if (!res.ok) {
-    throw new Error("Failed to verify token");
-  }
-  return res.json();
-}
+export const dynamic = "force-dynamic";
 
-type VerifyProps = {
-  params: { token: string };
-};
+type VerifyProps = { params: { token: string } };
 
 export default async function verifyPage({ params }: VerifyProps) {
-  const { token } = params;
-  const data = await verify(token);
-  console.log(data);
+  const data = await verifyEmail(params.token);
 
   return (
     <AuthTemplate>
@@ -41,7 +28,26 @@ export default async function verifyPage({ params }: VerifyProps) {
           <h2 className="text-2xl font-semibold text-foreground/85">Verifiying your account</h2>
           <p className="text-sm text-foreground/60">Please wait while we verify your account</p>
         </div>
-        <div className="h-40 w-40 flex items-center justify-center"></div>
+        <div className="w-full flex items-center justify-center p-4">
+          {data.success ? (
+            <div className="flex flex-col items-center justify-center gap-2 text-green-500 border-2 border-green-500 rounded-md p-4 border-dashed">
+              <MailCheck size={40} />
+              <p>{data.message}</p>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center gap-2 text-red-500 border-2 border-red-500 rounded-md p-4 border-dashed">
+              <MailWarning size={40} />
+              <p className="text-md">{data.message}</p>
+            </div>
+          )}
+        </div>
+        {data.success && (
+          <div className="flex items-center justify-center">
+            <Link href="/login" className={buttonVariants({ variant: "default" })}>
+              Login to your account
+            </Link>
+          </div>
+        )}
         <div className="flex items-center justify-center">
           <Link href="/login" className="text-sm text-foreground/60">
             Already have an account? Sign in

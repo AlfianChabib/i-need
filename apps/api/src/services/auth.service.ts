@@ -1,6 +1,7 @@
 import prisma from "../app/prisma";
 import { SendEmail } from "../common/email/send-email";
 import { checkExistAccount } from "../common/helpers/check-exist-user";
+import { validateVerificationToken } from "../common/helpers/validate-verification-token";
 import { ResponseError } from "../common/response-error";
 import { comparePassword, hashPassword } from "../lib/bcrypt/password";
 import { hashToken } from "../lib/hash-token";
@@ -27,10 +28,20 @@ export class AuthService {
   }
 
   static async verifyEmail(token: string) {
+    const existToken = await validateVerificationToken(token);
+
     const data = verifyVerifyToken(token);
     if (!data) throw new ResponseError(400, "Invalid token");
 
-    await prisma.user.update({ where: { id: data.userId }, data: { isVerified: true } });
+    await prisma.user.update({
+      where: { id: data.userId },
+      data: {
+        isVerified: true,
+        verifyToken: { update: { where: { id: existToken.id }, data: { isUsed: true } } },
+      },
+    });
+
+    return existToken;
   }
 
   static async login(email: string, password: string) {

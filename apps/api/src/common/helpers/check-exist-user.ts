@@ -16,5 +16,5 @@ export async function checkExistUser({ email, id }: Partial<ExistUser>) {
 export async function checkExistAccount(email: string) {
   const user = await prisma.user.findUnique({ where: { email } });
 
-  if (user) throw new ResponseError(404, "User already exist, please login");
+  if (user) throw new ResponseError(404, "Account already exist, login to your account");
 }

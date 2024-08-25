@@ -20,9 +20,9 @@ export class AuthController {
     try {
       const { token } = req.body;
 
-      // await AuthService.verifyEmail(token);
+      const existToken = await AuthService.verifyEmail(token);
 
-      return res.status(200).json({ success: true, message: "Email verified successfully", token });
+      return res.status(200).json({ success: true, message: "Email verified successfully", existToken });
     } catch (error) {
       next(error);
     }
