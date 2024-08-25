@@ -15,7 +15,7 @@ export const genVerifyToken = (data: VerifyTokenData) => {
     algorithm: "HS256",
   });
   const hashedToken = hashToken(token);
-  const verifyTokenUrl = `${process.env.FRONTEND_URL}/sign-up/verify?token=${token}`;
+  const verifyTokenUrl = `${process.env.FRONTEND_URL}/verify/${token}`;
 
   return { token, hashedToken, expiresDate, verifyTokenUrl };
 };

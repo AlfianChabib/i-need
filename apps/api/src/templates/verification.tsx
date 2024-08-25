@@ -9,7 +9,7 @@ export default function Verification({ email, verifyTokenUrl, expiresDate }: Pro
   return (
     <Html>
       <Head />
-      <Preview>Dropbox reset your password</Preview>
+      <Preview>Account verification</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={coverSection}>
@@ -27,7 +27,7 @@ export default function Verification({ email, verifyTokenUrl, expiresDate }: Pro
                 <Text style={verifyText}>Verification code</Text>
 
                 <Text style={codeText}>
-                  <Link style={link} href={verifyTokenUrl}>
+                  <Link style={link} href={verifyTokenUrl} target="_blank">
                     Verify Email
                   </Link>
                 </Text>

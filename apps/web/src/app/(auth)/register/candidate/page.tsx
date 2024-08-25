@@ -23,11 +23,11 @@ export default function SignUpCandidatePage() {
         </div>
         <SignUpCandidateForm />
         <div className="flex items-center justify-center">
-          <Link href="/sign-in/candidate" className="text-sm text-foreground/60">
+          <Link href="/login" className="text-sm text-foreground/60">
             Already have an account? Sign in
           </Link>
         </div>
-        <Link href="/sign-up/company" className={buttonVariants({ variant: "outline", className: "w-full" })}>
+        <Link href="/register/company" className={buttonVariants({ variant: "outline", className: "w-full" })}>
           For Companies
         </Link>
       </div>

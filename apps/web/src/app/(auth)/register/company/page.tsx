@@ -22,11 +22,11 @@ export default function SignUpCompanyPage() {
         </div>
         {/* form */}
         <div className="flex items-center justify-center">
-          <Link href="/sign-in/company" className="text-sm text-foreground/60">
+          <Link href="/login" className="text-sm text-foreground/60">
             Already have an account? Sign in
           </Link>
         </div>
-        <Link href="/sign-up/candidate" className={buttonVariants({ variant: "outline", className: "w-full" })}>
+        <Link href="/register/candidate" className={buttonVariants({ variant: "outline", className: "w-full" })}>
           For Candidates
         </Link>
       </div>

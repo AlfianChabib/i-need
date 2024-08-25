@@ -20,9 +20,9 @@ export class AuthController {
     try {
       const { token } = req.body;
 
-      await AuthService.verifyEmail(token);
+      // await AuthService.verifyEmail(token);
 
-      return res.status(200).json({ success: true, message: "Email verified successfully" });
+      return res.status(200).json({ success: true, message: "Email verified successfully", token });
     } catch (error) {
       next(error);
     }
@@ -34,14 +34,12 @@ export class AuthController {
 
       const result = await AuthService.login(data.email, data.password);
 
-      setCookie(res, "accessToken", result.accessToken);
+      // setCookie(res, "accessToken", result.accessToken);
       setCookie(res, "refreshToken", result.refreshToken);
 
-      return res.status(200).json({
-        success: true,
-        message: "Login successful",
-        data: { accessToken: result.accessToken },
-      });
+      return res
+        .status(200)
+        .json({ success: true, message: "Login successful", data: { accessToken: result.accessToken } });
     } catch (error) {
       next(error);
     }
