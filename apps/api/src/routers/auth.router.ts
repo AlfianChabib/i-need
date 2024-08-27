@@ -14,7 +14,16 @@ export class AuthRouter {
   }
 
   private initializeRoutes(): void {
-    this.router.post("/register", validate(AuthValidator.registerCandidate, "body"), this.authController.register);
+    this.router.post(
+      "/register/candidate",
+      validate(AuthValidator.registerCandidate, "body"),
+      this.authController.registerCandidate,
+    );
+    this.router.post(
+      "/register/company",
+      validate(AuthValidator.registerCompany, "body"),
+      this.authController.registerCompany,
+    );
     this.router.post("/verify", validate(AuthValidator.verifySchema, "body"), this.authController.verifyEmail);
     this.router.post("/login", validate(AuthValidator.loginSchema, "body"), this.authController.login);
     this.router.get("/session", this.authController.getSession);

@@ -3,7 +3,6 @@
 import { AuthService } from "@/services/auth.service";
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
-import { parseCookies } from "nookies";
 
 interface SessionData {
   email: string;

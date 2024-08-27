@@ -1,4 +1,4 @@
-import RegisterCandidateForm from "@/components/forms/register-candidate-form";
+import RegisterCandidateForm from "./register-candidate-form";
 import AuthTemplate from "@/components/templates/auth-template";
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
@@ -27,7 +27,10 @@ export default function SignUpCandidatePage() {
             Already have an account? Sign in
           </Link>
         </div>
-        <Link href="/register/company" className={buttonVariants({ variant: "outline", className: "w-full" })}>
+        <Link
+          href="/register/company"
+          className={buttonVariants({ variant: "outline", className: "w-full" })}
+        >
           For Companies
         </Link>
       </div>

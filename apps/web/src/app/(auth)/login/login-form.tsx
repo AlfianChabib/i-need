@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import useLogin from "@/hooks/auth/useLogin";
 
 export default function LoginForm() {
-  const { mutate, isPending, error } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(AuthValidator.loginSchema),
@@ -21,9 +21,24 @@ export default function LoginForm() {
   return (
     <div className="grid space-y-4">
       <Form {...form}>
-        <form className="flex flex-col gap-4" onSubmit={form.handleSubmit((data) => mutate(data))}>
-          <InputField form={form} name="email" label="Email" type="email" placeholder="ineed@example.com" />
-          <InputField form={form} name="password" label="Password" type="password" placeholder="*******" />
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={form.handleSubmit((values) => mutate(values))}
+        >
+          <InputField
+            form={form}
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="ineed@example.com"
+          />
+          <InputField
+            form={form}
+            name="password"
+            label="Password"
+            type="password"
+            placeholder="*******"
+          />
           <Button type="submit" className="w-full" aria-disabled={isPending}>
             Sign in
           </Button>

@@ -1,7 +1,11 @@
-export type ApiResponse<TData = Record<string, unknown>> = {
+export type ApiResponse = {
   success: boolean;
   message: string;
-  data?: TData;
+};
+export type ApiResponseData<TData = unknown> = {
+  success: boolean;
+  message: string;
+  data: TData;
 };
 
 export type ApiError = {

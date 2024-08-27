@@ -2,7 +2,7 @@ import AuthTemplate from "@/components/templates/auth-template";
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import SignInCandidateForm from "./LoginForm";
+import SignInCandidateForm from "./login-form";
 
 export default function SignInCandidatePage() {
   return (

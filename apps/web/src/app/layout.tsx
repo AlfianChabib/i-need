@@ -3,8 +3,15 @@ import { Inter_Tight as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import TanstackProviders from "@/components/providers/tanstack-provider";
+import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "sonner";
+// import { Toaster } from "@/components/ui/toaster";
 
-const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  preload: false,
+});
 
 export const metadata: Metadata = {
   title: "INeed",
@@ -19,7 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
-        <TanstackProviders>{children}</TanstackProviders>
+        <TanstackProviders>
+          <NextTopLoader showSpinner={false} />
+          {children}
+          <Toaster richColors position="top-right" />
+        </TanstackProviders>
       </body>
     </html>
   );

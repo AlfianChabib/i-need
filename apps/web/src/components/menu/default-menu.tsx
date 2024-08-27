@@ -1,28 +1,19 @@
 import Link from "next/link";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
-import MenuLink from "./menu-link";
+import React from "react";
+import { buttonVariants } from "../ui/button";
 
 export default function DefaultMenu() {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button className="bg-gradient-to-r from-red-600 to-yellow-600 font-normal">Get Started</Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <MenuLink href="/sign-up/candidate" label="Start as a Candidate" />
-        <MenuLink href="/sign-up/company" label="Start as a Company" />
-        <DropdownMenuSeparator />
-        <MenuLink href="/sign-in/candidate" label="Sign In as a Candidate" />
-        <MenuLink href="/sign-in/company" label="Sign In as a Company" />
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="flex gap-4">
+      <Link href="/login" className={buttonVariants({ variant: "outline" })}>
+        Sign In
+      </Link>
+      <Link
+        href="/register/candidate"
+        className={buttonVariants({ className: "bg-gradient-to-r from-red-600 to-yellow-600 font-normal" })}
+      >
+        Get Started
+      </Link>
+    </div>
   );
 }

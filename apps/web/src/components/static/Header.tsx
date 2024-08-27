@@ -17,7 +17,7 @@ export default function Header() {
       <div className="flex items-center justify-between px-5 py-4 container">
         <div className="flex items-center gap-5">
           <Link href={"/"} className="flex items-center gap-1">
-            <Image src={"/logo-black.png"} height={500} width={500} alt="logo" className="h-7 w-fit" />
+            <Image src={"/logo-black.png"} height={500} width={500} alt="logo" className="h-7 w-fit" priority />
             <h1 className="font-semibold text-xl">INeed</h1>
           </Link>
 
@@ -38,17 +38,7 @@ export default function Header() {
             </Button>
           </Link>
         </div>
-        <div className="flex gap-4">
-          <Link href="/login" className={buttonVariants({ variant: "outline" })}>
-            Sign In
-          </Link>
-          <Link
-            href="/register/candidate"
-            className={buttonVariants({ className: "bg-gradient-to-r from-red-600 to-yellow-600 font-normal" })}
-          >
-            Get Started
-          </Link>
-        </div>
+        <DefaultMenu />
       </div>
     </nav>
   );
