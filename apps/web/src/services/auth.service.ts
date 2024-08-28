@@ -1,16 +1,21 @@
 import { api, apiAuth } from "@/lib/axios";
-import { LoginSchema, RegisterCandidateSchema } from "@/types/auth";
+import { LoginData, LoginSchema, RegisterCandidateSchema, RegisterCompanySchema, SessionData } from "@/types/auth";
 import { ApiResponse, ApiResponseData } from "@/types/server";
 import { ErrorHandler } from "@/utils/error-handler";
-
-type LoginData = {
-  accessToken: string;
-};
 
 export class AuthService {
   static async registerCandidate(payload: RegisterCandidateSchema) {
     try {
-      const res = await api.post("/auth/register/candidate", payload);
+      const res = await api.post<ApiResponse>("/auth/register/candidate", payload);
+      return res.data;
+    } catch (error) {
+      throw new ErrorHandler(error);
+    }
+  }
+
+  static async registerCompany(payload: RegisterCompanySchema) {
+    try {
+      const res = await api.post<ApiResponse>("/auth/register/company", payload);
       return res.data;
     } catch (error) {
       throw new ErrorHandler(error);
@@ -28,10 +33,10 @@ export class AuthService {
 
   static async getSession() {
     try {
-      const res = await apiAuth.get("/auth/session");
-      const { session } = res.data;
+      const res = await apiAuth.get<ApiResponseData<SessionData>>("/auth/session");
+      const { data } = res.data;
 
-      return session;
+      return data;
     } catch (error) {
       throw new ErrorHandler(error);
     }

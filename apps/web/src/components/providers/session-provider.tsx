@@ -1,15 +1,10 @@
 "use client";
 
 import { AuthService } from "@/services/auth.service";
+import { SessionData } from "@/types/auth";
+import { initialSession } from "@/utils/constants";
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
-
-interface SessionData {
-  email: string;
-  userId: string;
-  role: string;
-  isVerified: boolean;
-}
+import React, { useContext, useMemo } from "react";
 
 const SessionContext = React.createContext<SessionData | null>(null);
 
@@ -23,11 +18,15 @@ export const useGetSession = () => {
 };
 
 export default function SessionProvider({ children }: { children: React.ReactNode }) {
-  const { data: session, isLoading } = useGetSession();
+  const { data, isLoading } = useGetSession();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const session = useMemo(() => {
+    if (data) return data;
+
+    return initialSession;
+  }, [data]);
+
+  if (isLoading) return <div>Loading...</div>;
 
   return <SessionContext.Provider value={session}>{children}</SessionContext.Provider>;
 }

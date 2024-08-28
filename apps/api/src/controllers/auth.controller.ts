@@ -63,7 +63,7 @@ export class AuthController {
 
       const session = await AuthService.getSession(userId);
 
-      return res.status(200).json({ success: true, message: "Get session successful", session });
+      return res.status(200).json({ success: true, message: "Get session successful", data: session });
     } catch (error) {
       next(error);
     }

@@ -2,6 +2,7 @@ import AuthTemplate from "@/components/templates/auth-template";
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import RegisterCompanyForm from "./register-company-form";
 
 export default function SignUpCompanyPage() {
   return (
@@ -20,15 +21,12 @@ export default function SignUpCompanyPage() {
           <h2 className="text-2xl font-semibold text-foreground/85">Welcome to INeed</h2>
           <p className="text-sm text-foreground/60">Create your account</p>
         </div>
-        {/* form */}
+        <RegisterCompanyForm />
         <div className="flex items-center justify-center">
           <Link href="/login" className="text-sm text-foreground/60">
             Already have an account? Sign in
           </Link>
         </div>
-        <Link href="/register/candidate" className={buttonVariants({ variant: "outline", className: "w-full" })}>
-          For Candidates
-        </Link>
       </div>
     </AuthTemplate>
   );

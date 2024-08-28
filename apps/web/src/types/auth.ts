@@ -5,3 +5,14 @@ export type LoginSchema = z.infer<typeof AuthValidator.loginSchema>;
 export type RegisterCandidateSchema = z.infer<typeof AuthValidator.registerCandidate>;
 export type RegisterCompanySchema = z.infer<typeof AuthValidator.registerCompany>;
 export type VerifySchema = z.infer<typeof AuthValidator.verifySchema>;
+
+export type LoginData = {
+  accessToken: string;
+};
+
+export type SessionData = {
+  email: string;
+  userId: string;
+  role: string;
+  isVerified: boolean;
+};

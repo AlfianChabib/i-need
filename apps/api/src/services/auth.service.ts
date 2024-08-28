@@ -65,7 +65,10 @@ export class AuthService {
   }
 
   static async getSession(userId: string) {
-    const user = await prisma.user.findUnique({ where: { id: userId } });
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      omit: { createdAt: true, updatedAt: true },
+    });
     if (!user) throw new ResponseError(400, "User not found");
 
     return user;
