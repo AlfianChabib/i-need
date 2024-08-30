@@ -27,9 +27,6 @@ export default function SignInCandidatePage() {
             Don&apos;t have an account? Register
           </Link>
         </div>
-        <Link href="/login" className={buttonVariants({ variant: "outline", className: "w-full" })}>
-          For Companies
-        </Link>
       </div>
     </AuthTemplate>
   );

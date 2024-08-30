@@ -13,8 +13,7 @@ export const setCookie = (res: Response, cookieName: CookieType, cookieValue: st
     httpOnly: true,
     secure: env.NODE_ENV === "production",
     path: "/",
-    sameSite: "lax",
-    // domain: process.env.NODE_ENV === "production" ? ".ineed.my.id" : "",
+    sameSite: "none",
     expires: new Date(Date.now() + expiresSeconds),
   });
 };

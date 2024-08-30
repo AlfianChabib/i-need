@@ -52,6 +52,7 @@ export const verifyRefreshToken = (token: string) => {
     }) as TokenData;
   } catch (error) {
     if (error instanceof Error) {
+      console.log(error);
       throw new ResponseError(400, "Invalid token");
     }
   }

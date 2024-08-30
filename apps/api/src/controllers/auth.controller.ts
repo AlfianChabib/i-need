@@ -46,6 +46,7 @@ export class AuthController {
 
       const result = await AuthService.login(data.email, data.password);
       setCookie(res, "refreshToken", result.refreshToken);
+      setCookie(res, "accessToken", result.accessToken);
 
       return res.status(200).json({
         success: true,
@@ -75,12 +76,13 @@ export class AuthController {
 
       const result = await AuthService.refreshToken(refreshToken);
 
-      // setCookie(res, "accessToken", result.accessToken);
+      setCookie(res, "accessToken", result.accessToken);
+      setCookie(res, "refreshToken", refreshToken);
 
       return res.status(200).json({
         success: true,
         message: "Refresh token successful",
-        data: { accessToken: result.accessToken },
+        data: result,
       });
     } catch (error) {
       next(error);

@@ -17,6 +17,7 @@ export const envSchema = z.object({
   BACKEND_URL: z.string().url(),
   FRONTEND_URL: z.string().url(),
   RESEND_API_KEY: z.string(),
+  SESSION_SECRET: z.string(),
   SECRET_VERIFICATION_TOKEN: z.string(),
   LIFETIME_VERIFICATION_TOKEN: z.string(),
   SECRET_REFRESH_TOKEN: z.string(),

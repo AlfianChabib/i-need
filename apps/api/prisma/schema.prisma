@@ -52,6 +52,13 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String   @db.MediumText
+  expiresAt DateTime
+}
+
 model Profile {
   id          String  @id @default(cuid())
   userId      String  @unique

@@ -4,11 +4,13 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import morgan from "morgan";
+import session from "express-session";
 import errorMiddleware from "../middleware/error.middleware";
 import { corsOptions } from "../utils/cors-option";
 import { ApiV1Router } from "../routers/api-v1.router";
 import { PORT, env } from "./config";
 import { serializeMiddleware } from "../middleware/serialize.middleware";
+import { sessionOptions } from "../utils/session-option";
 
 export default class App {
   private app: Express;
@@ -25,6 +27,7 @@ export default class App {
     this.app.use(helmet());
     this.app.use(morgan("dev"));
     this.app.use(json());
+    // this.app.use(session(sessionOptions));
     this.app.use(urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(serializeMiddleware);

@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import TanstackProviders from "@/components/providers/tanstack-provider";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "sonner";
+import SessionProvider from "@/components/providers/session-provider";
 // import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({
@@ -25,11 +26,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+      <body className={cn("font-sans antialiased", fontSans.variable)}>
         <TanstackProviders>
-          <NextTopLoader showSpinner={false} />
-          {children}
-          <Toaster richColors position="top-right" />
+          <SessionProvider>
+            <NextTopLoader showSpinner={false} />
+            {children}
+            <Toaster richColors position="top-right" />
+          </SessionProvider>
         </TanstackProviders>
       </body>
     </html>

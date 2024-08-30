@@ -59,6 +59,7 @@ export class AuthService {
     });
 
     return {
+      user,
       accessToken: token.accessToken,
       refreshToken: token.refreshToken,
     };
@@ -84,12 +85,13 @@ export class AuthService {
     if (!user) throw new ResponseError(400, "User not found");
 
     const existToken = await prisma.authToken.findFirst({ where: { userId: user.id, refreshToken: hashedToken } });
+    if (!existToken) throw new ResponseError(400, "Invalid token");
 
     const token = genAuthToken({ email: user.email, userId: user.id, role: user.role });
 
     return {
       accessToken: token.accessToken,
-      refreshToken: token.refreshToken,
+      refreshToken,
     };
   }
 }

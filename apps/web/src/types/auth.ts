@@ -11,8 +11,9 @@ export type LoginData = {
 };
 
 export type SessionData = {
+  id: string;
   email: string;
-  userId: string;
+  username: string;
   role: string;
   isVerified: boolean;
 };

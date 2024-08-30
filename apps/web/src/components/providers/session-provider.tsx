@@ -1,23 +1,24 @@
 "use client";
 
+import { useContext, useMemo, ReactNode, createContext } from "react";
 import { AuthService } from "@/services/auth.service";
 import { SessionData } from "@/types/auth";
 import { initialSession } from "@/utils/constants";
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useMemo } from "react";
 
-const SessionContext = React.createContext<SessionData | null>(null);
+const SessionContext = createContext<SessionData | null>(null);
 
 export const useGetSession = () => {
   return useQuery({
     queryKey: ["session"],
     queryFn: () => AuthService.getSession(),
+    gcTime: 1000 * 60 * 10,
     retry: 0,
     refetchOnWindowFocus: false,
   });
 };
 
-export default function SessionProvider({ children }: { children: React.ReactNode }) {
+export default function SessionProvider({ children }: { children: ReactNode }) {
   const { data, isLoading } = useGetSession();
 
   const session = useMemo(() => {
