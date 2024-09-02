@@ -1,9 +1,10 @@
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import { SessionOptions } from "express-session";
 import prisma from "../app/prisma";
+import { env } from "../app/config";
 
 export const sessionOptions: SessionOptions = {
-  secret: process.env.SESSION_SECRET,
+  secret: env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
   name: "session.id",

@@ -3,6 +3,7 @@ import { SendEmail } from "../common/email/send-email";
 import { checkExistAccount } from "../common/helpers/check-exist-user";
 import { validateVerificationToken } from "../common/helpers/validate-verification-token";
 import { ResponseError } from "../common/response-error";
+import { toSessionData } from "../common/session-data";
 import { comparePassword, hashPassword } from "../lib/bcrypt/password";
 import { hashToken } from "../lib/hash-token";
 import { genAuthToken, verifyRefreshToken } from "../lib/jwt/auth-token.jwt";
@@ -58,8 +59,10 @@ export class AuthService {
       data: { userId: user.id, refreshToken: token.hashedToken, expiresAt: token.expiresDate },
     });
 
+    const sessionData = toSessionData(user);
+
     return {
-      user,
+      user: sessionData,
       accessToken: token.accessToken,
       refreshToken: token.refreshToken,
     };

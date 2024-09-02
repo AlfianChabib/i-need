@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import GridPattern from "@/components/magicui/grid-pattern";
 import Header from "@/components/static/Header";
 
-export default async function LandingLayout({ children }: { children: ReactNode }) {
+export default function LandingLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex flex-col justify-between relative min-h-full gap-12 md:gap-24">
       <Header />

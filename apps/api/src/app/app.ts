@@ -27,7 +27,7 @@ export default class App {
     this.app.use(helmet());
     this.app.use(morgan("dev"));
     this.app.use(json());
-    // this.app.use(session(sessionOptions));
+    this.app.use(session(sessionOptions));
     this.app.use(urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(serializeMiddleware);

@@ -8,12 +8,13 @@ export type VerifySchema = z.infer<typeof AuthValidator.verifySchema>;
 
 export type LoginData = {
   accessToken: string;
+  user: SessionData;
 };
 
 export type SessionData = {
   id: string;
   email: string;
   username: string;
-  role: string;
+  role: "CANDIDATE" | "COMPANY";
   isVerified: boolean;
 };

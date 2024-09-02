@@ -4,8 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import TanstackProviders from "@/components/providers/tanstack-provider";
 import NextTopLoader from "nextjs-toploader";
-import { Toaster } from "sonner";
 import SessionProvider from "@/components/providers/session-provider";
+import { Toaster } from "sonner";
 // import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = FontSans({

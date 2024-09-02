@@ -46,7 +46,9 @@ export class AuthController {
 
       const result = await AuthService.login(data.email, data.password);
       setCookie(res, "refreshToken", result.refreshToken);
-      setCookie(res, "accessToken", result.accessToken);
+
+      req.session.user = result.user;
+      req.session.save();
 
       return res.status(200).json({
         success: true,
@@ -60,11 +62,14 @@ export class AuthController {
 
   async getSession(req: Request, res: Response, next: NextFunction) {
     try {
-      const { userId } = req.user;
+      // const { userId } = req.user;
 
-      const session = await AuthService.getSession(userId);
+      // console.log(req.session.user);
+      const sessionData = req.session.user;
 
-      return res.status(200).json({ success: true, message: "Get session successful", data: session });
+      // const session = await AuthService.getSession(userId);
+
+      return res.status(200).json({ success: true, message: "Get session successful", data: sessionData });
     } catch (error) {
       next(error);
     }
@@ -76,7 +81,7 @@ export class AuthController {
 
       const result = await AuthService.refreshToken(refreshToken);
 
-      setCookie(res, "accessToken", result.accessToken);
+      // setCookie(res, "accessToken", result.accessToken);
       setCookie(res, "refreshToken", refreshToken);
 
       return res.status(200).json({
