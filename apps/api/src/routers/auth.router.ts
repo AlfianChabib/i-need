@@ -26,6 +26,7 @@ export class AuthRouter {
     );
     this.router.post("/verify", validate(AuthValidator.verifySchema, "body"), this.authController.verifyEmail);
     this.router.post("/login", validate(AuthValidator.loginSchema, "body"), this.authController.login);
+    this.router.post("/logout", this.authController.logout);
     this.router.get("/session", this.authController.getSession);
     this.router.post("/refresh", this.authController.refreshToken);
   }

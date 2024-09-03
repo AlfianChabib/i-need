@@ -31,6 +31,15 @@ export class AuthService {
     }
   }
 
+  static async logout() {
+    try {
+      const res = await apiAuth.post<ApiResponse>("/auth/logout");
+      return res.data;
+    } catch (error) {
+      throw new ErrorHandler(error);
+    }
+  }
+
   static async getSession() {
     try {
       const res = await apiAuth.get<ApiResponseData<SessionData>>("/auth/session");

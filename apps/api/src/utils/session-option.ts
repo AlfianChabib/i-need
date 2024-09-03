@@ -6,7 +6,7 @@ import { env } from "../app/config";
 export const sessionOptions: SessionOptions = {
   secret: env.SESSION_SECRET,
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
   name: "session.id",
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 * 7,

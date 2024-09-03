@@ -6,11 +6,10 @@ import DefaultMenu from "../menu/default-menu";
 import { Github, Star } from "lucide-react";
 import { Button } from "../ui/button";
 import { useSession } from "../providers/session-provider";
+import CandidateMenu from "../menu/candidate-menu";
 
 export default function Header() {
   const session = useSession();
-
-  console.log(session);
 
   return (
     <nav className="fixed top-0 z-50 bg-white border-b border-zinc-300 w-full shadow-sm">
@@ -38,9 +37,7 @@ export default function Header() {
             </Button>
           </Link>
         </div>
-        <div>
-          <DefaultMenu />
-        </div>
+        <div>{session && session.isVerified ? <CandidateMenu /> : <DefaultMenu />}</div>
       </div>
     </nav>
   );

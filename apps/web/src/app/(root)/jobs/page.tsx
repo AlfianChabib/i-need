@@ -1,15 +1,7 @@
 import { getSession } from "@/utils/get-session-middleware";
-import { cookies } from "next/headers";
-import Image from "next/image";
 
 export default async function page() {
-  const sessionId = cookies().get("session.id");
-  const { username } = await getSession(sessionId?.value);
+  const session = await getSession();
 
-  return (
-    <div>
-      <Image src={"/logo-black.png"} alt="logo" width={50} height={50} className="mt-20 border" />
-      <p>{username}</p>
-    </div>
-  );
+  return <div className="pt-14">{session && <h1>Hello {session.username}</h1>}</div>;
 }

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
 import { LoginSchema, RegisterCandidate, RegisterCompany, VerifySchema } from "../types/auth";
 import { setCookie } from "../common/cookie-response";
+import { ResponseError } from "../common/response-error";
 
 export class AuthController {
   async registerCandidate(req: Request<{}, {}, RegisterCandidate>, res: Response, next: NextFunction) {
@@ -62,12 +63,9 @@ export class AuthController {
 
   async getSession(req: Request, res: Response, next: NextFunction) {
     try {
-      // const { userId } = req.user;
-
-      // console.log(req.session.user);
       const sessionData = req.session.user;
 
-      // const session = await AuthService.getSession(userId);
+      if (!sessionData) throw new ResponseError(400, "Session not found");
 
       return res.status(200).json({ success: true, message: "Get session successful", data: sessionData });
     } catch (error) {
@@ -80,14 +78,23 @@ export class AuthController {
       const { refreshToken } = req.cookies;
 
       const result = await AuthService.refreshToken(refreshToken);
-
-      // setCookie(res, "accessToken", result.accessToken);
       setCookie(res, "refreshToken", refreshToken);
 
       return res.status(200).json({
         success: true,
         message: "Refresh token successful",
         data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      req.session.destroy((err) => {
+        res.clearCookie("refreshToken");
+        return res.status(200).json({ success: true, message: "Logged out successfully" });
       });
     } catch (error) {
       next(error);
