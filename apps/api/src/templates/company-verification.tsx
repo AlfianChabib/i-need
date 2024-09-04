@@ -3,13 +3,17 @@ import React from "react";
 
 const baseUrl = process.env.BACKEND_URL;
 
-type Props = { email: string; verifyTokenUrl: string; expiresDate: Date };
-
-export default function Verification({ email, verifyTokenUrl, expiresDate }: Props) {
+export default function CompanyVerification({
+  verifyTokenUrl,
+  expiresDate,
+}: {
+  verifyTokenUrl: string;
+  expiresDate: Date;
+}) {
   return (
     <Html>
       <Head />
-      <Preview>Account verification</Preview>
+      <Preview>Conmpany Account Verification</Preview>
       <Body style={main}>
         <Container style={container}>
           <Section style={coverSection}>

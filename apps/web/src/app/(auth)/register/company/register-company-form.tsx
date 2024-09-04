@@ -1,26 +1,16 @@
 "use client";
 
+import useRegisterCompany from "@/hooks/auth/useRegisterCompany";
+import { Form } from "@/components/ui/form";
 import { InputField } from "@/components/form-fields/input-field";
 import { SubmitButton } from "@/components/form-fields/submit-button";
-import { Form } from "@/components/ui/form";
-import { AuthService } from "@/services/auth.service";
 import { RegisterCompanySchema } from "@/types/auth";
 import { AuthValidator } from "@/validations/auth.validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 
 export default function RegisterCompanyForm() {
-  const { mutate, isPending } = useMutation({
-    mutationFn: AuthService.registerCompany,
-    onSuccess: (res) => {
-      toast.success(res.message);
-    },
-    onError: (err) => {
-      toast.error(err.message);
-    },
-  });
+  const { mutate, isPending } = useRegisterCompany();
 
   const form = useForm<RegisterCompanySchema>({
     resolver: zodResolver(AuthValidator.registerCompany),

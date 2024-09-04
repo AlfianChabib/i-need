@@ -1,7 +1,7 @@
 import { render } from "@react-email/render";
 import resend from "../../utils/resend";
 import Verification from "../../templates/verification";
-import { ResponseError } from "../response-error";
+import CompanyVerification from "../../templates/company-verification";
 
 export async function sendEmail(email: string, html: string, subject: string) {
   return await resend.emails.send({
@@ -18,5 +18,11 @@ export class SendEmail {
     const html = render(Verification({ email, verifyTokenUrl, expiresDate }), { pretty: true });
 
     return await sendEmail(email, html, "Verify your email");
+  }
+
+  static async companyVerification(email: string, verifyTokenUrl: string, expiresDate: Date) {
+    const html = render(CompanyVerification({ verifyTokenUrl, expiresDate }), { pretty: true });
+
+    return await sendEmail(email, html, "Company verification");
   }
 }

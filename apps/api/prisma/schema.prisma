@@ -13,6 +13,11 @@ enum Role {
   COMPANY
 }
 
+enum CompanyStatus {
+  ACTIVE
+  INACTIVE
+}
+
 enum JobType {
   FULL_TIME
   PART_TIME
@@ -38,15 +43,16 @@ enum InterviewStatus {
 }
 
 model User {
-  id          String        @id @default(cuid())
-  username    String
-  email       String        @unique
-  role        Role          @default(CANDIDATE)
-  profile     Profile?
-  auth        Auth?
-  authToken   AuthToken[]
-  verifyToken VerifyToken[]
-  isVerified  Boolean       @default(false)
+  id             String          @id @default(cuid())
+  username       String
+  email          String          @unique
+  role           Role            @default(CANDIDATE)
+  profile        Profile?
+  companyProfile CompanyProfile?
+  auth           Auth?
+  authToken      AuthToken[]
+  verifyToken    VerifyToken[]
+  isVerified     Boolean         @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -67,6 +73,30 @@ model Profile {
   phoneNumber String?
   location    String?
   user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CompanyProfile {
+  id          String          @id @default(cuid())
+  userId      String          @unique
+  companyName String
+  logo        String?
+  address     String?
+  website     String?
+  industryId  String?
+  description String?
+  contact     CompanyContact?
+  status      CompanyStatus   @default(INACTIVE)
+  industry    Industry?       @relation(fields: [industryId], references: [id])
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CompanyContact {
+  id          String         @id @default(cuid())
+  companyId   String         @unique
+  email       String
+  phoneNumber String?
+  linkedin    String?
+  company     CompanyProfile @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }
 
 model Auth {
@@ -103,4 +133,11 @@ model VerifyToken {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Industry {
+  id             String           @id @default(cuid())
+  label          String
+  name           String
+  companyProfile CompanyProfile[]
 }

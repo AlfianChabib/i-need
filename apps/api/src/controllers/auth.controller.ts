@@ -21,7 +21,7 @@ export class AuthController {
     try {
       const data = req.body;
 
-      // await AuthService.registerCompany(data.username, data.email, data.password);
+      await AuthService.registerCompany(data);
 
       return res.status(200).json({ success: true, message: "Check your email to verify your account" });
     } catch (error) {

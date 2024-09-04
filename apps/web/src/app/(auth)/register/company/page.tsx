@@ -19,7 +19,7 @@ export default function SignUpCompanyPage() {
         </Link>
         <div>
           <h2 className="text-2xl font-semibold text-foreground/85">Welcome to INeed</h2>
-          <p className="text-sm text-foreground/60">Create your account</p>
+          <p className="text-sm text-foreground/60">Create your company account</p>
         </div>
         <RegisterCompanyForm />
         <div className="flex items-center justify-center">

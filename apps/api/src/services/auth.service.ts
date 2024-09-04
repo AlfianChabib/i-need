@@ -8,6 +8,7 @@ import { comparePassword, hashPassword } from "../lib/bcrypt/password";
 import { hashToken } from "../lib/hash-token";
 import { genAuthToken, verifyRefreshToken } from "../lib/jwt/auth-token.jwt";
 import { genVerifyToken, verifyVerifyToken } from "../lib/jwt/verification.jwt";
+import { RegisterCompany } from "../types/auth";
 
 export class AuthService {
   static async registerCandidate(username: string, email: string, password: string) {
@@ -26,6 +27,10 @@ export class AuthService {
 
       await SendEmail.verifyEmail(email, verifyTokenUrl, expiresDate);
     });
+  }
+
+  static async registerCompany(data: RegisterCompany) {
+    await checkExistAccount(data.email);
   }
 
   static async verifyEmail(token: string) {
