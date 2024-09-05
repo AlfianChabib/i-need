@@ -1,8 +1,9 @@
 import { SessionData } from "@/types/auth";
 
 export const initialSession: SessionData = {
+  id: "",
   email: "",
-  userId: "",
-  role: "",
+  username: "",
+  role: "CANDIDATE",
   isVerified: false,
 };

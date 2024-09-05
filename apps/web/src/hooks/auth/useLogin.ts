@@ -14,7 +14,7 @@ export default function useLogin() {
     mutationFn: async (data: LoginSchema) => await AuthService.login(data),
     onSuccess: (res) => {
       localStorage.setItem("token", res.data.accessToken);
-      router.push("/");
+      router.push(res.data.user.role === "CANDIDATE" ? "/jobs" : "/dashboard");
       queryClient.invalidateQueries({ queryKey: ["session"] });
     },
     onError: (err) => {

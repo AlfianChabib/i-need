@@ -31,6 +31,26 @@ export class AuthService {
 
   static async registerCompany(data: RegisterCompany) {
     await checkExistAccount(data.email);
+
+    return await prisma.$transaction(async (tx) => {
+      const { hashedPassword, salt } = hashPassword(data.password);
+      const newUser = await tx.user.create({
+        data: {
+          username: data.companyName,
+          email: data.email,
+          role: "COMPANY",
+          auth: { create: { password: hashedPassword, salt, email: data.email } },
+          companyProfile: { create: { companyName: data.companyName, contact: { create: { email: data.email } } } },
+        },
+      });
+
+      const { hashedToken, verifyTokenUrl, expiresDate } = genVerifyToken({ email: data.email, userId: newUser.id });
+      await tx.verifyToken.create({
+        data: { userId: newUser.id, token: hashedToken, expiresAt: expiresDate },
+      });
+
+      await SendEmail.companyVerification(data.email, verifyTokenUrl, expiresDate);
+    });
   }
 
   static async verifyEmail(token: string) {

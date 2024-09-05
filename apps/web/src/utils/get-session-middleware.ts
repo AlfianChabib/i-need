@@ -1,9 +1,7 @@
-// "use server";
-
 import { SessionData } from "@/types/auth";
 import { cookies } from "next/headers";
 
-export async function getSession() {
+export async function getServerSession() {
   const sessionId = cookies().get("session.id");
   console.log(sessionId);
 
