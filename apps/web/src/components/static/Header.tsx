@@ -13,7 +13,7 @@ export default function Header() {
 
   return (
     <nav className="fixed top-0 z-50 bg-white border-b border-zinc-300 w-full shadow-sm">
-      <div className="flex items-center justify-between px-5 py-4 container">
+      <div className="flex items-center justify-between px-5 py-3 container">
         <div className="flex items-center gap-5">
           <Link href={"/"} className="flex items-center gap-1">
             <Image src={"/logo-black.png"} height={500} width={500} alt="logo" className="h-7 w-fit" priority />
@@ -22,7 +22,7 @@ export default function Header() {
 
           <Link href={"https://github.com/AlfianChabib/i-need"} target="_blank" className="hidden lg:block">
             <Button
-              className="group relative inline-flex  items-center justify-center overflow-hidden rounded-md bg-neutral-950 font-medium text-neutral-200 duration-500"
+              className="group relative inline-flex items-center justify-center overflow-hidden rounded-md bg-neutral-950 font-medium text-neutral-200 duration-500"
               size={"default"}
             >
               <div className="relative inline-flex -translate-x-0 items-center transition group-hover:-translate-x-6">

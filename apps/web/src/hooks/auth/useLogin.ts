@@ -11,11 +11,11 @@ export default function useLogin() {
   const router = useRouter();
 
   const mutation = useMutation({
-    mutationFn: async (data: LoginSchema) => await AuthService.login(data),
+    mutationFn: async (data: LoginSchema) => AuthService.login(data),
     onSuccess: (res) => {
       localStorage.setItem("token", res.data.accessToken);
-      router.push(res.data.user.role === "CANDIDATE" ? "/jobs" : "/dashboard");
       queryClient.invalidateQueries({ queryKey: ["session"] });
+      router.push(res.data.user.role === "CANDIDATE" ? "/jobs" : "/dashboard");
     },
     onError: (err) => {
       toast.error(err.message);

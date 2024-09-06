@@ -1,4 +1,4 @@
-import { getServerSession } from "@/utils/get-session-middleware";
+import { getServerSession } from "@/utils/get-server-session";
 
 export default async function page() {
   const session = await getServerSession();

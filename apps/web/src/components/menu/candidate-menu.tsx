@@ -23,8 +23,8 @@ export default function CandidateMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel className="space-y-1">
-          <p className="text-foreground/90">{session?.username}</p>
-          <p className="text-xs font-normal text-foreground/70">{session?.email}</p>
+          <p className="text-foreground/90">{session.username}</p>
+          <p className="text-xs font-normal text-foreground/70">{session.email}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {/* {userMenuItems.map((item, i) => {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "./utils/get-session-middleware";
+import { getServerSession } from "./utils/get-server-session";
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
