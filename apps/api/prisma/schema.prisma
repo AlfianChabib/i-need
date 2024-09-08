@@ -68,8 +68,7 @@ model Session {
 model Profile {
   id          String  @id @default(cuid())
   userId      String  @unique
-  firstName   String
-  lastName    String
+  username    String
   phoneNumber String?
   location    String?
   user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)

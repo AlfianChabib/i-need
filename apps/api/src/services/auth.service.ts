@@ -17,7 +17,12 @@ export class AuthService {
     return await prisma.$transaction(async (tx) => {
       const { hashedPassword, salt } = hashPassword(password);
       const newUser = await tx.user.create({
-        data: { username, email, auth: { create: { password: hashedPassword, salt, email } } },
+        data: {
+          username,
+          email,
+          auth: { create: { password: hashedPassword, salt, email } },
+          profile: { create: { username } },
+        },
       });
 
       const { hashedToken, verifyTokenUrl, expiresDate } = genVerifyToken({ email, userId: newUser.id });

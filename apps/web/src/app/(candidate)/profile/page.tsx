@@ -1,3 +1,3 @@
-export default function page() {
-  return <div>Profile page</div>;
+export default function Profile() {
+  return <div className="pt-20">Profile page</div>;
 }
