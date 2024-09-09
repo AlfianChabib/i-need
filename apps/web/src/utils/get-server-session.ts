@@ -7,10 +7,8 @@ export async function getServerSession() {
   const res = await fetch("http://localhost:3001/api/v1/auth/session", {
     method: "GET",
     credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-      cookie: `session.id=${sessionId?.value}`,
-    },
+    headers: { "Content-Type": "application/json", cookie: `session.id=${sessionId?.value}` },
+    cache: "no-store",
   });
   const data = await res.json();
   return data.data as SessionData;
