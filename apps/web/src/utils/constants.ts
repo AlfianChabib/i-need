@@ -9,8 +9,15 @@ export const initialSession: SessionData = {
   isVerified: false,
 };
 
-export const userMenuItems: MenuItem[] = [
+export const candidateMenuItems: MenuItem[] = [
   { href: "/profile", label: "Profile", icon: "user" },
   { href: "/activity", label: "Activity", icon: "list-todo" },
   { href: "/document", label: "Document", icon: "file-text" },
+];
+
+export const companyMenuItems: MenuItem[] = [
+  { href: "/dashboard", label: "Dashboard", icon: "layout-grid" },
+  { href: "/applications", label: "Applications", icon: "file-badge" },
+  { href: "/candidates", label: "Candidates", icon: "users" },
+  { href: "/schedules", label: "Schedules", icon: "calendar" },
 ];

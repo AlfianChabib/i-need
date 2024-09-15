@@ -1,3 +1,3 @@
 export default function Profile() {
-  return <div className="pt-20">Profile page</div>;
+  return <div className="">Profile page</div>;
 }

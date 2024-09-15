@@ -5,7 +5,7 @@ import { UserRound } from "lucide-react";
 import { Icon } from "../lucide-icon";
 import MenuLink from "./menu-link";
 import LogoutButton from "./logout-button";
-import { userMenuItems } from "@/utils/constants";
+import { candidateMenuItems } from "@/utils/constants";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { toPascalCaseIcon } from "@/utils/pastcalcase-icon";
 import { useState } from "react";
@@ -33,7 +33,7 @@ export default function CandidateMenu() {
           <p className="font-normal text-foreground/80">{session.email}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {userMenuItems.map((item, i) => {
+        {candidateMenuItems.map((item, i) => {
           const activeLink = segment === item.href.split("/").at(-1);
           const iconName = toPascalCaseIcon(item.icon);
           return (
@@ -50,7 +50,8 @@ export default function CandidateMenu() {
         })}
         <DropdownMenuSeparator />
         <DropdownMenuItem className="p-0">
-          <LogoutButton className="flex w-full items-center space-x-4" variant="destructive" size="sm">
+          <LogoutButton className="flex w-full space-x-3 justify-between" variant="destructive" size="sm">
+            <span>Logout</span>
             <Icon name="LogOut" size={16} />
           </LogoutButton>
         </DropdownMenuItem>

@@ -1,13 +1,15 @@
 import React from "react";
-import Footer from "@/components/static/Footer";
-import Header from "@/components/static/Header";
+import Sidebar from "@/components/sidebar/sidebar";
+import Navbar from "@/components/menu/navbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col justify-between relative min-h-full gap-12 md:gap-24">
-      <Header />
-      <div className="flex-1 px-5 container flex flex-col">{children}</div>
-      <Footer />
+    <div className="flex h-screen bg-dashboardbg">
+      <Sidebar />
+      <div className="h-full overflow-y-auto flex flex-col flex-1">
+        <Navbar />
+        <div className="flex-1">{children}</div>
+      </div>
     </div>
   );
 }

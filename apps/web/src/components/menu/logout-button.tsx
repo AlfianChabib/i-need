@@ -23,7 +23,6 @@ export default function LogoutButton(props: ButtonProps) {
 
   return (
     <Button onClick={() => logout()} {...props}>
-      <span>Logout</span>
       {props.children}
     </Button>
   );

@@ -26,19 +26,27 @@ export default function HeroSection() {
         Track applications, organize your documents, and find new oppurtunities — all in one place.
       </p>
       <div className="flex flex-col gap-5 items-center">
-        <Link href={"/register/candidate"}>
-          <ShimmerButton
-            className="shadow-2xl mt-5 md:mt-10 flex items-center text-lg"
-            background="linear-gradient(to bottom, rgba(197, 48, 48, 1), rgba(221, 107, 32, 1))"
-            shimmerSize="0.1em"
-            shimmerDuration="1.2s"
+        <div className="flex items-center gap-4 mt-5 md:mt-10">
+          <Link
+            href={"/jobs"}
+            className="shadow-2xl flex items-center text-lg bg-dashboardbg text-foreground/80 border rounded-full leading-none font-medium px-6 py-3"
           >
-            <span className="whitespace-pre-wrap text-center  leading-none font-medium text-white dark:from-white dark:to-slate-900/10 lg:text-xl ">
-              Get started, it&apos;s free
-            </span>
-            <ChevronRight className="ml-2 size-4 md:size-5 group-hover:translate-x-1 transition" />
-          </ShimmerButton>
-        </Link>
+            Jobs
+          </Link>
+          <Link href={"/register/candidate"}>
+            <ShimmerButton
+              className="shadow-2xl flex items-center text-lg"
+              background="linear-gradient(to bottom, rgba(197, 48, 48, 1), rgba(221, 107, 32, 1))"
+              shimmerSize="0.1em"
+              shimmerDuration="1.2s"
+            >
+              <span className="whitespace-pre-wrap text-center leading-none font-medium text-white dark:from-white dark:to-slate-900/10 lg:text-xl ">
+                Get started, it&apos;s free
+              </span>
+              <ChevronRight className="ml-2 size-4 md:size-5 group-hover:translate-x-1 transition" />
+            </ShimmerButton>
+          </Link>
+        </div>
 
         <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
           Tracking {count} applications and counting!

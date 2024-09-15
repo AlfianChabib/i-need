@@ -1,16 +1,14 @@
-import AsideMenu from "@/components/menu/aside-menu";
+import { ReactNode } from "react";
+import Sidebar from "@/components/sidebar/sidebar";
 import Navbar from "@/components/menu/navbar";
-import { ReactNode, Suspense } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-full bg-dashboardbg">
-      <AsideMenu />
-      <div className="h-full overflow-y-auto flex flex-col flex-1">
-        <Suspense>
-          <Navbar />
-        </Suspense>
-        <div className="flex-1">{children}</div>
+      <Sidebar />
+      <div className="h-full flex flex-col flex-1">
+        <Navbar />
+        <div className="flex-1 md:p-4 p-2 overflow-y-scroll">{children}</div>
       </div>
     </div>
   );
