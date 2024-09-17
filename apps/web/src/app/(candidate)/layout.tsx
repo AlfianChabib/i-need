@@ -6,9 +6,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen bg-dashboardbg">
       <Sidebar />
-      <div className="h-full overflow-y-auto flex flex-col flex-1">
+      <div className="h-full flex flex-col flex-1">
         <Navbar />
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 md:p-4 p-2 overflow-y-auto h-[3000px]">{children}</div>
       </div>
     </div>
   );

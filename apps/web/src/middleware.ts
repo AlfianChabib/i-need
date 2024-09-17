@@ -1,5 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "./utils/get-server-session";
+import { companyMenuItems } from "./utils/constants";
+
+// const companyPath = Object.entries(companyMenuItems).map(([key, value]) => value.href);
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -7,7 +10,6 @@ export async function middleware(req: NextRequest) {
   if (path === "/") {
     try {
       const { role } = await getServerSession();
-      console.log(role === "COMPANY");
       if (role === "CANDIDATE") {
         return NextResponse.redirect(new URL("/jobs", req.url));
       } else {
@@ -17,8 +19,26 @@ export async function middleware(req: NextRequest) {
       return NextResponse.next();
     }
   }
+
+  // companyPath.forEach((item) => {
+  //   if (path.startsWith(item)) {
+  //     return NextResponse.redirect(new URL("/dashboard", req.url));
+  //   }
+  //   return NextResponse.next();
+  // });
 }
 
-export const config = {
-  matcher: ["/", "/login", "/register/:path", "/verify", "/dashboard/:path", "/profile/:path", "/jobs"],
+export const config: MiddlewareConfig = {
+  matcher: [
+    "/",
+    "/login",
+    "/register/:path",
+    "/verify",
+    "/jobs",
+    "/profile/:path*",
+    "/dashboard/:path*",
+    "/applications/:path*",
+    "/candidates/:path*",
+    "/schedules/:path*",
+  ],
 };

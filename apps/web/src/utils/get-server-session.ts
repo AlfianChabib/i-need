@@ -1,10 +1,12 @@
 import { SessionData } from "@/types/auth";
 import { cookies } from "next/headers";
 
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
+
 export async function getServerSession() {
   const sessionId = cookies().get("session.id");
 
-  const res = await fetch("http://localhost:3001/api/v1/auth/session", {
+  const res = await fetch(`${API_HOST}/auth/session`, {
     method: "GET",
     credentials: "include",
     headers: { "Content-Type": "application/json", cookie: `session.id=${sessionId?.value}` },

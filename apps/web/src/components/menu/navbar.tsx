@@ -6,6 +6,7 @@ import { Icon } from "../lucide-icon";
 
 export default function Navbar() {
   const { isOpen, toggle } = useSidebarStore();
+
   return (
     <nav className="border-b flex justify-between items-center w-full px-4 h-14">
       <div className="flex items-center gap-2">
