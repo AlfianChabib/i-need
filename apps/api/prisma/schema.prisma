@@ -81,7 +81,7 @@ model CompanyProfile {
   logo        String?
   address     String?
   website     String?
-  industryId  String?
+  industryId  Int?
   description String?
   contact     CompanyContact?
   status      CompanyStatus   @default(INACTIVE)
@@ -135,8 +135,10 @@ model VerifyToken {
 }
 
 model Industry {
-  id             String           @id @default(cuid())
+  id             Int              @id @default(autoincrement())
+  name           String           @unique
   label          String
-  name           String
   companyProfile CompanyProfile[]
+
+  @@map("industries")
 }

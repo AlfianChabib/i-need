@@ -12,7 +12,7 @@ export const initialSession: SessionData = {
 export const candidateMenuItems: MenuItem[] = [
   { href: "/profile", label: "Profile", icon: "user" },
   { href: "/activity", label: "Activity", icon: "list-todo" },
-  { href: "/document", label: "Document", icon: "file-text" },
+  { href: "/documents", label: "Documents", icon: "file-text" },
 ];
 
 export const companyMenuItems: MenuItem[] = [
@@ -21,3 +21,6 @@ export const companyMenuItems: MenuItem[] = [
   { href: "/candidates", label: "Candidates", icon: "users" },
   { href: "/schedules", label: "Schedules", icon: "calendar" },
 ];
+
+export const MAX_LOGO_SIZE = 2 * 1024 * 1024;
+export const ACCEPTED_IMAGE_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];

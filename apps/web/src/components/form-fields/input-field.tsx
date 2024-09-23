@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 
-type InputFiledProps<TFieldValues extends FieldValues> = {
+type InputFieldProps<TFieldValues extends FieldValues> = {
   form: UseFormReturn<TFieldValues>;
   name: Path<TFieldValues>;
   label?: string;
@@ -15,7 +15,7 @@ export const InputField = <TFieldValues extends FieldValues = FieldValues>({
   label,
   description,
   ...props
-}: InputFiledProps<TFieldValues>) => {
+}: InputFieldProps<TFieldValues>) => {
   return (
     <FormField
       control={form.control}
