@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Icon } from "../lucide-icon";
 import { useSelectedImageStore } from "@/store/selected-image-store";
 
-export default function DisplaySelectedImage() {
+export const DisplaySelectedImage = () => {
   const { selectedImage } = useSelectedImageStore();
 
   return (
@@ -20,4 +20,4 @@ export default function DisplaySelectedImage() {
       )}
     </div>
   );
-}
+};

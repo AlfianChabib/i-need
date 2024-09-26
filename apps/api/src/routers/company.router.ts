@@ -1,5 +1,9 @@
 import { Router } from "express";
 import { CompanyController } from "../controllers/company.controller";
+import { validate } from "../middleware/validator.middleware";
+import { CompanyValidator } from "../validations/company.validation";
+import { uploadCompanyLogo } from "../lib/multer/multer";
+import { multerMiddleware } from "../middleware/multer.middleware";
 
 export class CompanyRouter {
   private router: Router;
@@ -12,7 +16,13 @@ export class CompanyRouter {
   }
 
   private initializeRoutes(): void {
-    this.router.get("/status/:companyId", this.companyController.getCompanyStatus);
+    this.router.get("/status", this.companyController.getCompanyStatus);
+    this.router.post(
+      "/onboarding",
+      multerMiddleware(uploadCompanyLogo),
+      validate(CompanyValidator.companyOnboardingSchema, "body"),
+      this.companyController.onboarding,
+    );
   }
 
   getRouter(): Router {

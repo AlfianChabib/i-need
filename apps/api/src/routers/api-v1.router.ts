@@ -2,6 +2,8 @@ import { Router } from "express";
 import { AuthRouter } from "./auth.router";
 import { CompanyRouter } from "./company.router";
 import { DataRouter } from "./data.router";
+import authorization from "../middleware/authorization.middleware";
+import { Role } from "@prisma/client";
 
 export class ApiV1Router {
   private router: Router;
@@ -19,7 +21,7 @@ export class ApiV1Router {
 
   private initializeRoutes(): void {
     this.router.use("/auth", this.authRouter.getRouter());
-    this.router.use("/company", this.companyRouter.getRouter());
+    this.router.use("/company", authorization(Role.COMPANY), this.companyRouter.getRouter());
     this.router.use("/data", this.dataRouter.getRouter());
   }
 

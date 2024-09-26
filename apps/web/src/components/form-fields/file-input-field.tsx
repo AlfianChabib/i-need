@@ -36,19 +36,13 @@ export const FileInputField = <TFieldValues extends FieldValues = FieldValues>({
                 accept={props.accept}
                 onBlur={field.onBlur}
                 name={field.name}
+                ref={field.ref}
                 onChange={(e) => {
-                  field.onChange(e.target.files);
+                  field.onChange(e.target.files?.[0] || null);
                   setSelectedImage(e.target.files?.[0] || null);
                 }}
-                ref={field.ref}
               />
-              <Label
-                htmlFor="fileInput"
-                // className={buttonVariants({
-                //   className: "bg-gradient-to-r from-red-600 to-yellow-600 font-normal gap-2 cursor-pointer",
-                // })}
-                className={props.className}
-              >
+              <Label htmlFor="fileInput" className={props.className}>
                 <Icon name="Image" size={20} />
                 <span className="whitespace-nowrap">{label}</span>
               </Label>

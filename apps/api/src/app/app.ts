@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, NextFunction, json, urlencoded } from "express";
-import path from "path";
+import path from "node:path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
@@ -31,7 +31,7 @@ export default class App {
     this.app.use(urlencoded({ extended: true }));
     this.app.use(cookieParser());
     this.app.use(serializeMiddleware);
-    this.app.use(express.static(path.join(__dirname, "../../public")));
+    this.app.use("/public", express.static(path.join(__dirname, "../../public")));
   }
 
   private handleError(): void {
@@ -59,7 +59,7 @@ export default class App {
   private routes(): void {
     const apiV1Router = new ApiV1Router();
 
-    this.app.get("/", (req: Request, res: Response) => res.send(`Hello, Purwadhika Student !`));
+    this.app.get("/", (req: Request, res: Response) => res.send(`Welcome to INeed ${env.NODE_ENV} api !`));
     this.app.use("/api/v1", apiV1Router.getRouter());
   }
 

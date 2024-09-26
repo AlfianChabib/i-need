@@ -1,11 +1,9 @@
-import { ACCEPTED_IMAGE_MIME_TYPES, MAX_LOGO_SIZE } from "@/utils/constants";
 import { z } from "zod";
-import { singleImageSchema } from ".";
 
-export class OnboardingValidator {
+export class CompanyValidator {
   static readonly companyOnboardingSchema = z.object({
     companyName: z.string().min(3, { message: "Company Name must be at least 3 characters" }),
-    logo: singleImageSchema,
+    logo: z.string().url({ message: "Invalid URL" }),
     address: z.string().min(1, { message: "Address is required" }),
     website: z.string().url({ message: "Invalid URL" }).optional(),
     industryId: z.coerce.number().min(1, { message: "Industry is required" }),

@@ -10,8 +10,9 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "typeRoots": ["./src/types", "./node_modules/@types"]
+    "typeRoots": ["./src/types"],
+    "types": ["express-session", "express"]
   },
-  "include": ["src"],
+  "include": ["src", "src/types"],
   "exclude": ["node_modules"]
 }
