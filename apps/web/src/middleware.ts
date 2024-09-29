@@ -1,8 +1,5 @@
 import { MiddlewareConfig, NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "./utils/get-server-session";
-import { companyMenuItems } from "./utils/constants";
-
-// const companyPath = Object.entries(companyMenuItems).map(([key, value]) => value.href);
 
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
@@ -19,13 +16,6 @@ export async function middleware(req: NextRequest) {
       return NextResponse.next();
     }
   }
-
-  // companyPath.forEach((item) => {
-  //   if (path.startsWith(item)) {
-  //     return NextResponse.redirect(new URL("/dashboard", req.url));
-  //   }
-  //   return NextResponse.next();
-  // });
 }
 
 export const config: MiddlewareConfig = {

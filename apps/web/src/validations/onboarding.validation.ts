@@ -1,4 +1,3 @@
-import { ACCEPTED_IMAGE_MIME_TYPES, MAX_LOGO_SIZE } from "@/utils/constants";
 import { z } from "zod";
 import { singleImageSchema } from ".";
 

@@ -15,6 +15,7 @@ type SelectFieldProps<TFieldValues extends FieldValues = FieldValues> = {
   label?: string;
   description?: string;
   placeholder?: string;
+  defaultValue?: string;
   options: SelectOption[];
 } & Omit<React.ComponentPropsWithoutRef<"select">, "form">;
 
@@ -31,7 +32,7 @@ export const SelectField = <TFieldValues extends FieldValues = FieldValues>({
       render={({ field }) => (
         <FormItem>
           {props.label && <FormLabel>{props.label}</FormLabel>}
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select onValueChange={field.onChange} defaultValue={props.defaultValue}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={props.placeholder} className="placeholder:text-muted-foreground" />

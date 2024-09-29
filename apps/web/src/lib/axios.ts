@@ -1,15 +1,16 @@
 import axios, { AxiosInstance } from "axios";
+import { env } from "./env";
 
-const API_URL = process.env.NEXT_PUBLIC_API_HOST;
+const API_HOST = env.NEXT_PUBLIC_API_HOST;
 
 export const api: AxiosInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: API_HOST,
   withCredentials: true,
   headers: { "Content-Type": "application/json" },
 });
 
 export const apiAuth: AxiosInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: API_HOST,
   withCredentials: true,
   headers: { "Content-Type": "application/json" },
 });

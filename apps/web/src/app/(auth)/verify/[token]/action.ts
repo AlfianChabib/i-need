@@ -1,12 +1,11 @@
 "use server";
 
+import { env } from "@/lib/env";
 import { ApiResponse } from "@/types/server";
-
-const API_URL = process.env.NEXT_PUBLIC_API_HOST;
 
 export async function verifyEmail(token: string): Promise<ApiResponse> {
   try {
-    const res = await fetch(`${API_URL}/auth/verify`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_HOST}/auth/verify`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },

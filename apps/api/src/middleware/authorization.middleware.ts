@@ -6,13 +6,18 @@ import { SessionData } from "../types/auth";
 export default function authorization(role: Role) {
   return async function (req: Request, res: Response, next: NextFunction) {
     try {
-      // const user = req.user as SessionData;
+      const user = req.user as SessionData;
       const session = req.session.user;
-      console.log(session);
+      if (session) {
+        if (session.role !== role) throw new ResponseError(403, "Unauthorized access, invalid session");
+        return next();
+      }
+      if (user) {
+        if (user.role !== role) throw new ResponseError(403, "Unauthorized access, invalid user");
+        return next();
+      }
 
-      // if (!user && !session) throw new ResponseError(403, "Unauthorized access 1");
-      // if (user.role !== role || session?.role !== role) throw new ResponseError(403, "Unauthorized access 2");
-      next();
+      throw new ResponseError(403, "Unauthorized access");
     } catch (error) {
       next(error);
     }

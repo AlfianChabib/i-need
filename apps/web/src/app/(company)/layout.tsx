@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
+import { checkCompanyStatus } from "@/utils/check-company-status";
 import Sidebar from "@/components/sidebar/sidebar";
 import Navbar from "@/components/menu/navbar";
-import { checkCompanyStatus } from "@/utils/check-company-status";
 
 export default async function Layout({ children }: { children: ReactNode }) {
   await checkCompanyStatus();

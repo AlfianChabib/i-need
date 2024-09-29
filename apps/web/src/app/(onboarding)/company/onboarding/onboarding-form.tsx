@@ -39,7 +39,7 @@ export default function OnboardingForm() {
       logo: null,
       address: "",
       website: "",
-      industryId: undefined,
+      industryId: 0,
       description: "",
       contact: { email: session.email, phoneNumber: "", linkedin: "" },
     },
