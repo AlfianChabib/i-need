@@ -15,6 +15,6 @@ export default function errorMiddleware(err: Error, req: Request, res: Response,
       message: err.message,
     });
   } else {
-    return res.status(500).json({ status: "error", error: "Internal server error" });
+    return res.status(500).json({ status: "error", error: "Internal server error", message: "Something went wrong" });
   }
 }

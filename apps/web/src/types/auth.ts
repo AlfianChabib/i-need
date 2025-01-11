@@ -1,7 +1,12 @@
 import { AuthValidator } from "@/validations/auth.validation";
 import { z } from "zod";
 
-export type Role = "CANDIDATE" | "COMPANY";
+const ROLE = {
+  CANDIDATE: "CANDIDATE",
+  COMPANY: "COMPANY",
+} as const;
+
+export type Role = (typeof ROLE)[keyof typeof ROLE];
 
 export type LoginSchema = z.infer<typeof AuthValidator.loginSchema>;
 export type RegisterCandidateSchema = z.infer<typeof AuthValidator.registerCandidate>;

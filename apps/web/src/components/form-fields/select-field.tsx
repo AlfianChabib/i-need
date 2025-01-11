@@ -2,10 +2,11 @@ import React from "react";
 import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { cn } from "@/lib/utils";
 
 export interface SelectOption {
   id: number;
-  name: string;
+  value: string;
   label: string;
 }
 
@@ -30,17 +31,17 @@ export const SelectField = <TFieldValues extends FieldValues = FieldValues>({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="w-full">
           {props.label && <FormLabel>{props.label}</FormLabel>}
-          <Select onValueChange={field.onChange} defaultValue={props.defaultValue}>
+          <Select onValueChange={field.onChange} defaultValue={props.defaultValue} disabled={props.disabled}>
             <FormControl>
-              <SelectTrigger>
-                <SelectValue placeholder={props.placeholder} className="placeholder:text-muted-foreground" />
+              <SelectTrigger className={cn("bg-background", props.className)}>
+                <SelectValue placeholder={props.placeholder} />
               </SelectTrigger>
             </FormControl>
             <SelectContent>
               {options.map((option) => (
-                <SelectItem key={option.id} value={String(option.id)}>
+                <SelectItem key={option.id} value={option.value}>
                   {option.label}
                 </SelectItem>
               ))}

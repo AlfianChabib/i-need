@@ -15,7 +15,7 @@ export default function useLogin() {
     onSuccess: (res) => {
       localStorage.setItem("token", res.data.accessToken);
       queryClient.invalidateQueries({ queryKey: ["session"] });
-      router.push(res.data.user.role === "CANDIDATE" ? "/jobs" : "/dashboard");
+      router.push(res.data.user.role === "CANDIDATE" ? "/jobs" : "/overview");
     },
     onError: (err) => {
       toast.error(err.message);

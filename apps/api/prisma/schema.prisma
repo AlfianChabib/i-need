@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -25,6 +25,12 @@ enum JobType {
   INTERN
 }
 
+enum WorkingType {
+  REMOTE
+  ONSITE
+  HYBRID
+}
+
 enum InterviewType {
   REMOTE
   ONSITE
@@ -39,7 +45,15 @@ enum ApplicationStatus {
 enum InterviewStatus {
   PENDING
   ACCEPTED
+  RESCHEDULED
   REJECTED
+  FINISHED
+  CANCELLED
+}
+
+enum JobStatus {
+  ACTIVE
+  CLOSED
 }
 
 model User {
@@ -61,7 +75,7 @@ model User {
 model Session {
   id        String   @id
   sid       String   @unique
-  data      String   @db.MediumText
+  data      String   @db.VarChar()
   expiresAt DateTime
 }
 
@@ -87,6 +101,8 @@ model CompanyProfile {
   status      CompanyStatus   @default(INACTIVE)
   industry    Industry?       @relation(fields: [industryId], references: [id])
   user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Job         Job[]
+  Interview   Interview[]
 }
 
 model CompanyContact {
@@ -132,6 +148,95 @@ model VerifyToken {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Job {
+  id             String             @id @default(cuid())
+  companyId      String
+  title          String
+  description    String             @db.VarChar()
+  city           String
+  redirectUrl    String?
+  type           JobType
+  workingType    WorkingType
+  classification JobClassification?
+  status         JobStatus          @default(ACTIVE)
+  interviews     Interview[]
+  applications   Application[]
+  company        CompanyProfile     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  deleted        Boolean            @default(false)
+  completedAt    DateTime?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@map("jobs")
+}
+
+model Application {
+  id         String            @id @default(cuid())
+  jobId      String
+  job        Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  status     ApplicationStatus
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  interviews Interview?
+
+  @@map("applications")
+}
+
+model Interview {
+  id            String          @id @default(cuid())
+  applicationId String          @unique
+  application   Application     @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  status        InterviewStatus
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  interviewType InterviewType
+  companyId     String
+  company       CompanyProfile  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  job           Job             @relation(fields: [jobId], references: [id])
+  jobId         String
+
+  @@map("interviews")
+}
+
+model JobClassification {
+  id                  Int               @id @default(autoincrement())
+  jobId               String            @unique
+  job                 Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  classification      Classification    @relation(fields: [classificationId], references: [id])
+  classificationId    Int
+  subClassification   SubClassification @relation(fields: [subClassificationId], references: [id])
+  subClassificationId Int
+
+  @@map("job_classifications")
+}
+
+model Classification {
+  id                Int                 @id @default(autoincrement())
+  title             String              @db.VarChar()
+  subClassification SubClassification[]
+  jobClassification JobClassification[]
+
+  @@map("classifications")
+}
+
+model SubClassification {
+  id                Int                 @id @default(autoincrement())
+  title             String              @db.VarChar()
+  classification    Classification      @relation(fields: [classificationId], references: [id])
+  classificationId  Int
+  jobCLassification JobClassification[]
+
+  @@map("sub_classifications")
+}
+
+model Skill {
+  id    Int    @id @default(autoincrement())
+  title String @db.VarChar(500)
+
+  @@index([title])
+  @@map("skills")
 }
 
 model Industry {

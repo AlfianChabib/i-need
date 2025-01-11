@@ -2,6 +2,7 @@ import prisma from "../app/prisma";
 import { SendEmail } from "../common/email/send-email";
 import { checkExistAccount } from "../common/helpers/check-exist-user";
 import { validateVerificationToken } from "../common/helpers/validate-verification-token";
+import users from "../common/prisma/user";
 import { ResponseError } from "../common/response-error";
 import { toSessionData } from "../common/session-data";
 import { comparePassword, hashPassword } from "../lib/bcrypt/password";
@@ -13,6 +14,8 @@ import { RegisterCompany } from "../types/auth";
 export class AuthService {
   static async registerCandidate(username: string, email: string, password: string) {
     await checkExistAccount(email);
+
+    await users.findUniqueId(email, { include: { auth: true } });
 
     return await prisma.$transaction(async (tx) => {
       const { hashedPassword, salt } = hashPassword(password);
@@ -76,7 +79,7 @@ export class AuthService {
   }
 
   static async login(email: string, password: string) {
-    const user = await prisma.user.findFirst({ where: { email }, include: { auth: true } });
+    const user = await prisma.user.findUnique({ where: { email }, include: { auth: true } });
     if (!user || !user.auth) throw new ResponseError(400, "Your account is not registered");
     if (!user.isVerified) throw new ResponseError(400, "Your account is not verified, please verify your email");
 

@@ -7,10 +7,13 @@ export async function middleware(req: NextRequest) {
   if (path === "/") {
     try {
       const { role } = await getServerSession();
-      if (role === "CANDIDATE") {
-        return NextResponse.redirect(new URL("/jobs", req.url));
-      } else {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
+      switch (role) {
+        case "CANDIDATE":
+          return NextResponse.redirect(new URL("/jobs", req.url));
+        case "COMPANY":
+          return NextResponse.redirect(new URL("/overview", req.url));
+        default:
+          return NextResponse.next();
       }
     } catch (error) {
       return NextResponse.next();
@@ -26,7 +29,7 @@ export const config: MiddlewareConfig = {
     "/verify",
     "/jobs",
     "/profile/:path*",
-    "/dashboard/:path*",
+    "/overview/:path*",
     "/applications/:path*",
     "/candidates/:path*",
     "/schedules/:path*",

@@ -1,22 +1,21 @@
-import { Input } from "@/components/ui/input";
 import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { cn } from "@/lib/utils";
+import Tiptap from "../tiptap/tiptap";
 
-type InputFieldProps<TFieldValues extends FieldValues> = {
+type TextEditorFieldProps<TFieldValues extends FieldValues> = {
   form: UseFormReturn<TFieldValues>;
   name: Path<TFieldValues>;
   label?: string;
   description?: string;
-} & Omit<React.ComponentProps<typeof Input>, "form">;
+} & Omit<React.ComponentPropsWithoutRef<"textarea">, "form">;
 
-export const InputField = <TFieldValues extends FieldValues = FieldValues>({
+export const TextEditorField = <TFieldValues extends FieldValues = FieldValues>({
   form,
   name,
   label,
   description,
   ...props
-}: InputFieldProps<TFieldValues>) => {
+}: TextEditorFieldProps<TFieldValues>) => {
   return (
     <FormField
       control={form.control}
@@ -25,7 +24,7 @@ export const InputField = <TFieldValues extends FieldValues = FieldValues>({
         <FormItem className="space-y-1">
           {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
-            <Input {...props} {...field} className={cn("bg-background", props.className)} />
+            <Tiptap onChange={field.onChange} description="Write something nice..." placeholder={props.placeholder} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

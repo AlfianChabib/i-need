@@ -13,6 +13,8 @@ export class DataRouter {
 
   private initializeRoutes() {
     this.router.get("/industries", this.dataController.getIndustries);
+    this.router.get("/classifications", this.dataController.getClassifications);
+    this.router.get("/classifications/:classificationId", this.dataController.getSubClassifications);
   }
 
   getRouter(): Router {

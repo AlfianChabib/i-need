@@ -17,15 +17,23 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { getSessionMenu } from "@/utils/getSessionMenu";
+import { cn } from "@/lib/utils";
 
-export default function HeaderMenu() {
+type HeaderMenuProps = {
+  className?: string;
+};
+
+export default function HeaderMenu({ className }: HeaderMenuProps) {
   const session = useSession();
   const { isOpen, setIsOpen } = useDropdownMenuStore();
   const [linkMenu] = useState<MenuItem[]>(getSessionMenu(session.role));
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger className="border rounded-full w-9 h-9 flex items-center justify-center bg-dashboardbg">
+      {/* <DropdownMenuTrigger className="border rounded-full w-9 h-9 flex items-center justify-center bg-dashboardbg"> */}
+      <DropdownMenuTrigger
+        className={cn("border rounded-full w-9 h-9 flex items-center justify-center bg-dashboardbg", className)}
+      >
         <UserRound size={20} />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

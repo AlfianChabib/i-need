@@ -29,9 +29,9 @@ export default function RootLayout({
       <body className={cn("font-sans antialiased", fontSans.variable)}>
         <TanstackProviders>
           <SessionProvider>
-            <NextTopLoader showSpinner={false} />
-            {children}
+            {/* <NextTopLoader showSpinner={false} /> */}
             <Toaster richColors position="top-right" />
+            {children}
           </SessionProvider>
         </TanstackProviders>
       </body>

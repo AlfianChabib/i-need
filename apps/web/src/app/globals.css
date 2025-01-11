@@ -82,4 +82,23 @@ html {
     width: "var(--radix-dropdown-menu-trigger-width)";
     max-height: "--radix-dropdown-menu-content-available-height";
   }
+
+  .tiptap {
+    :first-child {
+      @apply mt-0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply text-pretty;
+    }
+
+    p {
+      @apply text-pretty;
+    }
+  }
 }
