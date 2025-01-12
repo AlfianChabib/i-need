@@ -1,6 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["omitApi"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -75,7 +74,7 @@ model User {
 model Session {
   id        String   @id
   sid       String   @unique
-  data      String   @db.VarChar()
+  data      String   @db.Char()
   expiresAt DateTime
 }
 
@@ -154,7 +153,7 @@ model Job {
   id             String             @id @default(cuid())
   companyId      String
   title          String
-  description    String             @db.VarChar()
+  description    String             @db.Char()
   city           String
   redirectUrl    String?
   type           JobType
@@ -233,7 +232,7 @@ model SubClassification {
 
 model Skill {
   id    Int    @id @default(autoincrement())
-  title String @db.VarChar(500)
+  title String @unique @db.VarChar(500)
 
   @@index([title])
   @@map("skills")

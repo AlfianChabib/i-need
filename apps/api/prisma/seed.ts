@@ -9,23 +9,26 @@ type Skill = {
 };
 
 const prisma = new PrismaClient({
-  datasources: { db: { url: `${process.env.DATABASE_URL}?connection_limit=60&pool_timeout=0` } },
+  datasources: { db: { url: `${process.env.DATABASE_URL}&connection_limit=60&pool_timeout=0` } },
 });
 
 const skills: Array<Skill> = skillsData as unknown as Array<Skill>;
 
 async function main() {
   try {
-    const upsertIndustries = seedIndustries.map(async (data) => {
-      return await prisma.industry.upsert({
+    prisma.$connect();
+    console.log("Seeding started...");
+
+    seedIndustries.map(async (data) => {
+      await prisma.industry.upsert({
         where: { name: data.name },
         create: { name: data.name, label: data.label },
         update: {},
       });
     });
 
-    const classifications = classification.preferredClassificationOptions.map(async (data) => {
-      return await prisma.classification.upsert({
+    classification.preferredClassificationOptions.map(async (data) => {
+      await prisma.classification.upsert({
         where: { title: data.description, id: data.id },
         create: {
           title: data.description,
@@ -38,15 +41,13 @@ async function main() {
       });
     });
 
-    const skillsSeed = skills.map(async (data, index) => {
-      return await prisma.skill.upsert({
-        where: { id: index },
+    skills.map(async (data) => {
+      await prisma.skill.upsert({
+        where: { title: data.text },
         create: { title: data.text },
         update: {},
       });
     });
-
-    return Promise.all([upsertIndustries, classifications, skillsSeed]);
   } catch (error) {
     console.error(error);
     process.exit(1);
@@ -55,8 +56,8 @@ async function main() {
 
 main()
   .then(async () => {
-    console.log("Seeding completed successfully");
     await prisma.$disconnect();
+    console.log("Seeding completed successfully");
   })
   .catch((e) => {
     console.error(e);
