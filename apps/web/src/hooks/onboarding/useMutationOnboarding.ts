@@ -10,7 +10,7 @@ export const useMutationOnboarding = () => {
     mutationFn: CompanyService.onboarding,
     onSuccess: (res) => {
       toast.success(res.message);
-      router.push("/dashboard");
+      router.push("/overview");
     },
     onError: (err) => {
       toast.error(err.message);

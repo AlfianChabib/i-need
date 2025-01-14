@@ -1,7 +1,6 @@
 import { api, apiAuth } from "@/lib/axios";
 import { LoginData, LoginSchema, RegisterCandidateSchema, RegisterCompanySchema, SessionData } from "@/types/auth";
 import { ApiResponse, ApiResponseData } from "@/types/server";
-import { initialSession } from "@/utils/constants";
 import { ErrorHandler } from "@/utils/error-handler";
 
 export class AuthService {

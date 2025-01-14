@@ -46,10 +46,11 @@ export class AuthController {
       const data = req.body;
 
       const result = await AuthService.login(data.email, data.password);
-      setCookie(res, "refreshToken", result.refreshToken);
 
       req.session.user = result.user;
       req.session.save();
+
+      setCookie(res, "refreshToken", result.refreshToken);
 
       return res.status(200).json({
         success: true,

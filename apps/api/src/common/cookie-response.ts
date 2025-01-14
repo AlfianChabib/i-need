@@ -13,7 +13,8 @@ export const setCookie = (res: Response, cookieName: CookieType, cookieValue: st
     httpOnly: true,
     secure: env.NODE_ENV === "production",
     path: "/",
-    sameSite: "none",
+    domain: "localhost",
     expires: new Date(Date.now() + expiresSeconds),
+    sameSite: env.NODE_ENV === "production" ? "none" : "lax",
   });
 };

@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Session" ALTER COLUMN "data" SET DATA TYPE VARCHAR(500);
+
+-- AlterTable
+ALTER TABLE "jobs" ALTER COLUMN "description" SET DATA TYPE CHAR;

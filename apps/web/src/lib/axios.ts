@@ -27,6 +27,10 @@ apiAuth.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    if (config.url?.includes("/auth/session") && !token) {
+      return Promise.reject(new axios.Cancel("Not logged in"));
+    }
     return config;
   },
   (error) => {

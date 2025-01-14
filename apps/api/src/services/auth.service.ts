@@ -15,7 +15,7 @@ export class AuthService {
   static async registerCandidate(username: string, email: string, password: string) {
     await checkExistAccount(email);
 
-    await users.findUniqueId(email, { include: { auth: true } });
+    // await users.findUniqueId(email, { include: { auth: true } });
 
     return await prisma.$transaction(async (tx) => {
       const { hashedPassword, salt } = hashPassword(password);

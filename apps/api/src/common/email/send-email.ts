@@ -5,9 +5,10 @@ import CompanyVerification from "../../templates/company-verification";
 
 export async function sendEmail(email: string, html: string, subject: string) {
   return await resend.emails.send({
-    // from: "INeed <noreply@ineed.my.id>",
-    from: "Acme <onboarding@resend.dev>",
-    to: "delivered@resend.dev",
+    from: "INeed <noreply@ineed.my.id>",
+    // from: "Acme <onboarding@resend.dev>",
+    // to: "delivered@resend.dev",
+    to: email,
     subject,
     html,
   });

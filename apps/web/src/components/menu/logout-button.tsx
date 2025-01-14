@@ -12,9 +12,9 @@ export default function LogoutButton(props: ButtonProps) {
   const { mutate: logout } = useMutation({
     mutationFn: AuthService.logout,
     onSuccess: () => {
+      router.push("/");
       queryClient.resetQueries();
       localStorage.removeItem("token");
-      router.push("/");
     },
     onError: () => {
       router.refresh();
